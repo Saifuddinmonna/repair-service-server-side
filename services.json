@@ -1,0 +1,51 @@
+[
+	{
+		"name": "PC Laptop Repair",
+		"img1": "https://i.ibb.co/yScbchx/laptop-image.png",
+		"img2": "https://unsplash.com/photos/yGPxCYPS8H4/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTF8fGNvbXB1dGVyJTIwcmVwYWlyfGVufDB8fHx8MTY2Nzk4NzAwMA&force=true",
+		"details": "Laptop repair is our core service, and we've built up a lot of trusted experience. It's the service we were founded on and the one we're the most excited to bring you! If you've got a sick laptop, chromebook, or need a notebook repair, we're here to help. We take pride in our repair skills and over the years have developed quite the knack for repairing every type of laptop out there. If you're not sure what service you need, or you don't see the service you need listed above, don't worry! We're professionals and even if it's not listed here, bring your computer by or fill out a quote form and we'll see what we can do to help. Laptops are great machines when everything is working, but there are plenty of things that can go wrong, and that's why we're here.",
+		"price": "1200",
+		"rating": "5"
+	},
+	{
+		"name": "iPhone Repair",
+		"short": "iPhone RepairDo you need a professional iPhone repair? Come to Computer Repair Doctor! We have a team of professional iPhone repair technicians that can help you with any iPhone repair you need.",
+		"img1": "https://i.ibb.co/vsm51nZ/iphone-8-repair.png",
+		"img2": "https://images.unsplash.com/photo-1617299516258-eb06985065ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aXBob25lJTIwcmVwYWlyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+		"details": "iPhone Screen Repair,iPhone screen repair is one of the most popular services we provide. That’s probably because they’re so easy to drop and you use them so often! We provide iPhone screen repair, and almost any other repair related to iPhones - scroll down to see for yourself!If your iPhone gets damaged, or you need iPhone screen repair, you have a few options:You can bring it to the Apple store.You can trust a repair shop you’ve never heard of before.  you can take it to Computer Repair Doctor for iPhone repair. Let’s look at all three.The technology we love is now a huge part of our lives. iPhones give you access to your contacts, your documents, your “running playlist” and more. Sadly, we don’t know what we’ve got until it’s gone. A damaged iPhone can throw you into a frenzy!",
+		"price": "2500",
+		"rating": "5"
+	},
+	{
+		"name": "iPad Repair",
+		"img1": "https://i.ibb.co/wy0DDHv/ipads.png",
+		"img2": "https://unsplash.com/photos/1382ByZsCtU/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTl8fGlwYWQlMjByZXBhaXJ8ZW58MHx8fHwxNjY4MDA4MzA3&force=true",
+		"details": "Repair Description iPads have gotten very popular - and you probably didn't realize there were so many different versions out already! They're useful for traveling, entertaining your kids, or just browsing on your couch at home if you don't feel like using a laptop. That versatility is a blessing and a curse, because those are situations where it's pretty easy to crack your screen or spill your drink onto your iPad. That's where we come in! iPads are essentially just giant iPhones, and they can break in very similar ways! We're constantly replacing screens and batteries, as well as performing home button repairs, liquid damage cleaning, and more! Check out iPhone Repair or Mac Repair also.We're here to help, so if you have any questions about the repair service or maybe just finding out what's wrong with your iPad, feel free to fill out our quote form, give us a call, or stop by during open hours.",
+		"price": "1500",
+		"rating": "5"
+	},
+	{
+		"name": "Mac Repair",
+		"img1": "https://i.ibb.co/5BPCWrD/imac.png",
+		"img2": "https://unsplash.com/photos/knxuAKpRoxs/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MXx8bWFjJTIwcmVwYWlyfGVufDB8fHx8MTY2ODAwODY2OA&force=true",
+		"details": "Mac Repair Are you looking for professional Mac repair services? Get your MacBook or iMac to us and we’ll make sure to get it back to your hands in mint condition. If you know what repair your Mac needs, let us know right away, and build your repair with Compute To start your repair with Computer Repair Doctor, select MacBook or iMac, the model of your Mac, and choose the repair service you need: Didn’t find the Mac repair you’re looking for? Let us know by calling us or adding a note to your inquiry! We’ll get back to you as soon as possible with more information on your Mac repair.Make sure to drop your contact information, pick a Computer Repair Doctor near you, and pick the best time for you to drop off your Mac for repair.",
+		"price": "3000",
+		"rating": "5"
+	},
+	{
+		"name": "Desktop Repair",
+		"img1": "https://i.ibb.co/NWHh441/desktop-icon2.jpg",
+		"img2": "https://unsplash.com/photos/KHSPGJ3zP0M/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8Y29tcHV0ZXIlMjByZXBhaXJ8ZW58MHx8fHwxNjY3OTg3MDAw&force=true",
+		"details": "We know that computer repair problems come in all shapes and sizes. If you're not sure what's wrong with your desktop, or you don't see the service you need listed above, that's okay too! We're professionals so whatever your computer needs, we should be able to fix it. We'll double and triple check to make sure that the service we're going to provide is the right service for your situation. If the price of repair is too high, no worries! All you'll owe us is a smile.",
+		"price": "2000",
+		"rating": "5"
+	},
+	{
+		"name": "Cell Phone Repair",
+		"img1": "https://i.ibb.co/NjGGsXv/smartphones.png",
+		"img2": "https://unsplash.com/photos/yGPxCYPS8H4/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTF8fGNvbXB1dGVyJTIwcmVwYWlyfGVufDB8fHx8MTY2Nzk4NzAwMA&force=true",
+		"details": "We love our phones, but like all good things, healthy cell phones do come to an end. Life happens. Daily wear and tear takes its toll on our devices. Or you drop your phone and damage the screen. Browse our repair services below for help with your cell phone repair:Cell phone screen repair is one of the most common repairs we see in the shop, between  Android cracked screens and broken iPhone screens. It’s so easy to let your cell phone slip out of your hand or place it on a sloping surface only to watch the display break.We’ve seen many people who deal with the annoyance of a broken screen, waiting for the next “upgrade” and it never ceases to amaze us! If only these people knew how easy and affordable it could be to get their phone back to working order with cell phone screen repair!Are you dealing with a damaged cell phone screen? Go to a shop that provides cell phone screen repair ASAP for professional services. With expert phone repair services, you’ll have your screen replacement done in a snap. Then you can avoid further damage with a screen protector.",
+		"price": "1000",
+		"rating": "5"
+	}
+]
