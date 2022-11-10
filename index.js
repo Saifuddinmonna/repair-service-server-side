@@ -12,14 +12,14 @@ app.use(cors());
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.wuiqqjn.mongodb.net/?retryWrites=true&w=majority`;
-// const uri =
-// 	"mongodb+srv://<username>:<password>@cluster0.wuiqqjn.mongodb.net/?retryWrites=true&w=majority";
+
 const client = new MongoClient(uri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	serverApi: ServerApiVersion.v1,
 });
 
+//jwt initialized......
 function verifyJWT(req, res, next) {
 	const authHeader = req.headers.authorization;
 
@@ -38,10 +38,13 @@ function verifyJWT(req, res, next) {
 }
 
 const serviceName = client.db("repairService").collection("servicesName");
+
+//db connection start from here.......
 async function dbconnect() {
 	try {
 		await client.connect();
 
+		//home data loading from here.....
 		console.log("db connected sucessfully".green);
 		app.get("/home", async (req, res) => {
 			try {
@@ -55,6 +58,9 @@ async function dbconnect() {
 			}
 		});
 
+
+		//services route data load from here....
+
 		app.get("/services", async (req, res) => {
 			try {
 				const query = { runtime: { $lt: 4 } };
@@ -66,7 +72,7 @@ async function dbconnect() {
 			}
 		});
 
-		//details by id
+		//details by id data loadd here.......
 
 		app.get("/services/:id", async (req, res) => {
 			try {
@@ -88,9 +94,14 @@ async function dbconnect() {
 			}
 		});
 
+		//review delete update remove db start from here.....
+
 		const addServiceCollection = client
 			.db("repairService")
 			.collection("addServiceCollection");
+		
+		
+		
 		app.post("/services/addservice", async (req, res) => {
 			try {
 				const result = await addServiceCollection.insertOne(req.body);
@@ -114,6 +125,8 @@ async function dbconnect() {
 				});
 			}
 		});
+
+		//token are loaded from .....for localstorage
 		app.post("/jwt", (req, res) => {
 			try {
 				const user = req.body;
@@ -127,7 +140,7 @@ async function dbconnect() {
 		});
 
 		// myreview api
-		app.get("/myreview", async (req, res) => {
+		app.get("/myreview", verifyJWT, async (req, res) => {
 			try {
 				const decoded = req.decoded;
 
@@ -149,7 +162,7 @@ async function dbconnect() {
 			}
 		});
 
-		app.post("/myreview", async (req, res) => {
+		app.post("/myreview", verifyJWT, async (req, res) => {
 			try {
 				const order = req.body;
 				const result = await addServiceCollection.insertOne(order);
@@ -159,7 +172,7 @@ async function dbconnect() {
 			}
 		});
 
-		app.patch("/myreview/:id", async (req, res) => {
+		app.patch("/myreview/:id", verifyJWT, async (req, res) => {
 			try {
 				const id = req.params.id;
 				const status = req.body.status;
@@ -179,7 +192,7 @@ async function dbconnect() {
 			}
 		});
 
-		app.delete("/myreview/:id", async (req, res) => {
+		app.delete("/myreview/:id", verifyJWT, async (req, res) => {
 			const id = req.params.id;
 			const query = { _id: ObjectId(id) };
 			const result = await addServiceCollection.deleteOne(query);
@@ -192,67 +205,7 @@ async function dbconnect() {
 
 dbconnect().catch((err) => console.error(err));
 
-// 		app.post("/jwt", (req, res) => {
-// 			const user = req.body;
-// 			const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-// 				expiresIn: "1d",
-// 			});
-// 			res.send({ token });
-// 		});
-// 		app.get("/services", async (req, res) => {
-// 			const query = {};
-// 			const cursor = serviceCollection.find(query);
-// 			const services = await cursor.toArray();
-// 			res.send(services);
-// 		});
-// 		app.get("/services/:id", async (req, res) => {
-// 			const id = req.params.id;
-// 			const query = { _id: ObjectId(id) };
-// 			const service = await serviceCollection.findOne(query);
-// 			res.send(service);
-// 		});
-// 		// myreview api
-// 		app.get("/myreview", verifyJWT, async (req, res) => {
-// 			const decoded = req.decoded;
-// 			if (decoded.email !== req.query.email) {
-// 				res.status(403).send({ message: "unauthorized access" });
-// 			}
-// 			let query = {};
-// 			if (req.query.email) {
-// 				query = {
-// 					email: req.query.email,
-// 				};
-// 			}
-// 			const cursor = orderCollection.find(query);
-// 			const myreview = await cursor.toArray();
-// 			res.send(myreview);
-// 		});
-// 		app.post("/myreview", verifyJWT, async (req, res) => {
-// 			const order = req.body;
-// 			const result = await orderCollection.insertOne(order);
-// 			res.send(result);
-// 		});
-// 		app.patch("/myreview/:id", verifyJWT, async (req, res) => {
-// 			const id = req.params.id;
-// 			const status = req.body.status;
-// 			const query = { _id: ObjectId(id) };
-// 			const updatedDoc = {
-// 				$set: {
-// 					status: status,
-// 				},
-// 			};
-// 			const result = await orderCollection.updateOne(query, updatedDoc);
-// 			res.send(result);
-// 		});
-// 		app.delete("/myreview/:id", verifyJWT, async (req, res) => {
-// 			const id = req.params.id;
-// 			const query = { _id: ObjectId(id) };
-// 			const result = await orderCollection.deleteOne(query);
-// 			res.send(result);
-// 		});
-// }
-
-// run().catch((err) => console.error(err));
+// 		ap
 
 app.get("/", (req, res) => {
 	res.send("repair service is running");
