@@ -1,3 +1,4 @@
+//requires option are from here...
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -7,7 +8,7 @@ var colors = require("colors");
 const app = express();
 const port = process.env.PORT || 5000;
 
-// middle wares
+// middle wares are here
 app.use(cors());
 app.use(express.json());
 
@@ -38,6 +39,12 @@ function verifyJWT(req, res, next) {
 }
 
 const serviceName = client.db("repairService").collection("servicesName");
+const addServiceCollection = client
+	.db("repairService")
+	.collection("addServiceCollection");
+const usersCommentCollection = client
+	.db("repairService")
+	.collection("usersCommentCollection");
 
 //db connection start from here.......
 async function dbconnect() {
@@ -57,7 +64,6 @@ async function dbconnect() {
 				console.log("i got a errrr".bgRed);
 			}
 		});
-
 
 		//services route data load from here....
 
@@ -96,12 +102,6 @@ async function dbconnect() {
 
 		//review delete update remove db start from here.....
 
-		const addServiceCollection = client
-			.db("repairService")
-			.collection("addServiceCollection");
-		
-		
-		
 		app.post("/services/addservice", async (req, res) => {
 			try {
 				const result = await addServiceCollection.insertOne(req.body);
@@ -139,7 +139,7 @@ async function dbconnect() {
 			}
 		});
 
-		// myreview api
+		// myreview api start here ////.......
 		app.get("/myreview", verifyJWT, async (req, res) => {
 			try {
 				const decoded = req.decoded;
@@ -193,17 +193,51 @@ async function dbconnect() {
 		});
 
 		app.delete("/myreview/:id", verifyJWT, async (req, res) => {
-			const id = req.params.id;
-			const query = { _id: ObjectId(id) };
-			const result = await addServiceCollection.deleteOne(query);
-			res.send(result);
+			try {
+				const id = req.params.id;
+				const query = { _id: ObjectId(id) };
+				const result = await addServiceCollection.deleteOne(query);
+				res.send(result);
+			} catch (error) {
+				console.log(error.name.bgRed, error.message.bold);
+			}
+		});
+
+		//users comment added here
+
+		app.get("/userscomments", async (req, res) => {
+			try {
+				const query = { runtime: { $lt: 4 } };
+				const cursor = usersCommentCollection.find();
+				const services = await cursor.toArray();
+				res.send(comments);
+			} catch (error) {
+				console.log("i got a errrr on comments".bgRed);
+			}
+		});
+
+		app.delete("/userscomments/:id", verifyJWT, async (req, res) => {
+			try {
+				const id = req.params.id;
+				const query = { _id: ObjectId(id) };
+				const result = await usersCommentCollection.deleteOne(query);
+				res.send(result);
+			} catch (error) {
+				console.log(error.name.bgRed, error.message.bold);
+			}
 		});
 	} catch (error) {
-		console.log(error.name.bgRed, error.message.bold);
+		console.log('error :this is main error'.bgRed)
+		res.send({
+			success: false,
+			error: error.message,
+		});
 	}
+		
+	
 }
 
-dbconnect().catch((err) => console.error(err));
+dbconnect().catch((err) => console.error(err,'this is  error form runnin function and last'));
 
 // 		ap
 
@@ -214,3 +248,4 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
 	console.log(`repair service running on ${port}`);
 });
+//rejpair services end here..........................
