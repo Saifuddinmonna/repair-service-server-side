@@ -93,6 +93,85 @@ app.get("/services/:id", async (req, res) => {
 	}
 });
 
+const addServiceCollection = client
+	.db("repairService")
+	.collection("addServiceCollection");
+app.post("/services/addservice", async (req, res) => {
+	try {
+		const result = await addServiceCollection.insertOne(req.body);
+
+		if (result.insertedId) {
+			res.send({
+				success: true,
+				message: `Successfully created the ${req.body.name} with id ${result.insertedId}`,
+			});
+		} else {
+			res.send({
+				success: false,
+				error: "Couldn't create the product",
+			});
+		}
+	} catch (error) {
+		console.log(error.name.bgRed, error.message.bold);
+		res.send({
+			success: false,
+			error: error.message,
+		});
+	}
+});
+  app.post("/jwt", (req, res) => {
+		const user = req.body;
+		const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+			expiresIn: "1d",
+		});
+		res.send({ token });
+  });  
+
+// myreview api
+app.get("/myreview", verifyJWT, async (req, res) => {
+	const decoded = req.decoded;
+
+	if (decoded.email !== req.query.email) {
+		res.status(403).send({ message: "unauthorized access" });
+	}
+
+	let query = {};
+	if (req.query.email) {
+		query = {
+			email: req.query.email,
+		};
+	}
+	const cursor = addServiceCollection.find(query);
+	const myreview = await cursor.toArray();
+	res.send(myreview);
+});
+
+app.post("/myreview", verifyJWT, async (req, res) => {
+	const order = req.body;
+	const result = await addServiceCollection.insertOne(order);
+	res.send(result);
+});
+
+app.patch("/myreview/:id", verifyJWT, async (req, res) => {
+	const id = req.params.id;
+	const status = req.body.status;
+	const query = { _id: ObjectId(id) };
+	const updatedDoc = {
+		$set: {
+			status: status,
+		},
+	};
+	const result = await addServiceCollection.updateOne(query, updatedDoc);
+	res.send(result);
+});
+
+app.delete("/myreview/:id", verifyJWT, async (req, res) => {
+	const id = req.params.id;
+	const query = { _id: ObjectId(id) };
+	const result = await addServiceCollection.deleteOne(query);
+	res.send(result);
+});
+
 // 		app.post("/jwt", (req, res) => {
 // 			const user = req.body;
 // 			const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
@@ -112,8 +191,8 @@ app.get("/services/:id", async (req, res) => {
 // 			const service = await serviceCollection.findOne(query);
 // 			res.send(service);
 // 		});
-// 		// orders api
-// 		app.get("/orders", verifyJWT, async (req, res) => {
+// 		// myreview api
+// 		app.get("/myreview", verifyJWT, async (req, res) => {
 // 			const decoded = req.decoded;
 // 			if (decoded.email !== req.query.email) {
 // 				res.status(403).send({ message: "unauthorized access" });
@@ -125,15 +204,15 @@ app.get("/services/:id", async (req, res) => {
 // 				};
 // 			}
 // 			const cursor = orderCollection.find(query);
-// 			const orders = await cursor.toArray();
-// 			res.send(orders);
+// 			const myreview = await cursor.toArray();
+// 			res.send(myreview);
 // 		});
-// 		app.post("/orders", verifyJWT, async (req, res) => {
+// 		app.post("/myreview", verifyJWT, async (req, res) => {
 // 			const order = req.body;
 // 			const result = await orderCollection.insertOne(order);
 // 			res.send(result);
 // 		});
-// 		app.patch("/orders/:id", verifyJWT, async (req, res) => {
+// 		app.patch("/myreview/:id", verifyJWT, async (req, res) => {
 // 			const id = req.params.id;
 // 			const status = req.body.status;
 // 			const query = { _id: ObjectId(id) };
@@ -145,7 +224,7 @@ app.get("/services/:id", async (req, res) => {
 // 			const result = await orderCollection.updateOne(query, updatedDoc);
 // 			res.send(result);
 // 		});
-// 		app.delete("/orders/:id", verifyJWT, async (req, res) => {
+// 		app.delete("/myreview/:id", verifyJWT, async (req, res) => {
 // 			const id = req.params.id;
 // 			const query = { _id: ObjectId(id) };
 // 			const result = await orderCollection.deleteOne(query);
