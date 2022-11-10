@@ -42,36 +42,25 @@ async function dbconnect() {
 	try {
 		await client.connect();
 
-		
 		console.log("db connected sucessfully".green);
-	}
-	catch (error) {
-		console.log(error.name.bgRed,error.message.bold)
+	} catch (error) {
+		console.log(error.name.bgRed, error.message.bold);
 	}
 }
- 
+
 dbconnect();
 
-	
-		
-		
-
-		app.get("/servicename", async (req, res) => {
-			try {
-				const query = { runtime: { $lt: 15 } };
-				const cursor = serviceName.find();
-				const services = await cursor.toArray();
-				res.send(services);
-
-				
-			}
-		 catch (error) {
-		console.log( "i got a errrr".bgRed);
-	        }
-		});
-		
-
-
+app.get("/services", async (req, res) => {
+	try {
+		const query = { runtime: { $lt: 4 } };
+		const cursor = serviceName.find();
+		const services = await cursor.toArray();
+		services.splice(3)
+		res.send(services);
+	} catch (error) {
+		console.log("i got a errrr".bgRed);
+	}
+});
 
 // 		app.post("/jwt", (req, res) => {
 // 			const user = req.body;
