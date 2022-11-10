@@ -50,15 +50,46 @@ async function dbconnect() {
 
 dbconnect();
 
+app.get("/home", async (req, res) => {
+	try {
+		const query = { runtime: { $lt: 4 } };
+		const cursor = serviceName.find();
+		const services = await cursor.toArray();
+		services.splice(3);
+		res.send(services);
+	} catch (error) {
+		console.log("i got a errrr".bgRed);
+	}
+});
+
 app.get("/services", async (req, res) => {
 	try {
 		const query = { runtime: { $lt: 4 } };
 		const cursor = serviceName.find();
 		const services = await cursor.toArray();
-		services.splice(3)
 		res.send(services);
 	} catch (error) {
 		console.log("i got a errrr".bgRed);
+	}
+});
+
+//details by id
+
+app.get("/services/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const product = await serviceName.findOne({ _id: ObjectId(id) });
+
+		res.send({
+			success: true,
+			data: product,
+		});
+	} catch (error) {
+		res.send({
+			success: false,
+			error: error.message,
+		});
 	}
 });
 
