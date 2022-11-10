@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 var colors = require("colors");
@@ -119,16 +119,20 @@ app.post("/services/addservice", async (req, res) => {
 		});
 	}
 });
-  app.post("/jwt", (req, res) => {
+app.post("/jwt", (req, res) => {
+	try {
 		const user = req.body;
 		const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
 			expiresIn: "1d",
 		});
 		res.send({ token });
-  });  
+	} catch (error) {
+		console.log("jwt arror".red);
+	}
+});
 
 // myreview api
-app.get("/myreview", verifyJWT, async (req, res) => {
+app.get("/myreview", async (req, res) => {
 	const decoded = req.decoded;
 
 	if (decoded.email !== req.query.email) {
@@ -146,13 +150,13 @@ app.get("/myreview", verifyJWT, async (req, res) => {
 	res.send(myreview);
 });
 
-app.post("/myreview", verifyJWT, async (req, res) => {
+app.post("/myreview", async (req, res) => {
 	const order = req.body;
 	const result = await addServiceCollection.insertOne(order);
 	res.send(result);
 });
 
-app.patch("/myreview/:id", verifyJWT, async (req, res) => {
+app.patch("/myreview/:id",  async (req, res) => {
 	const id = req.params.id;
 	const status = req.body.status;
 	const query = { _id: ObjectId(id) };
@@ -165,7 +169,7 @@ app.patch("/myreview/:id", verifyJWT, async (req, res) => {
 	res.send(result);
 });
 
-app.delete("/myreview/:id", verifyJWT, async (req, res) => {
+app.delete("/myreview/:id",  async (req, res) => {
 	const id = req.params.id;
 	const query = { _id: ObjectId(id) };
 	const result = await addServiceCollection.deleteOne(query);
